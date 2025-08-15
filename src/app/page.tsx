@@ -61,6 +61,7 @@ export default function Page() {
   const [targetLang, setTargetLang] = useState("es");
 
   const [listening, setListening] = useState(false);
+  const [restarting, setRestarting] = useState(false);
   const [original, setOriginal] = useState(""); // live transcript
   const debouncedOriginal = useDebouncedValue(original, 600);
 
@@ -192,14 +193,46 @@ export default function Page() {
       rec.onend = () => {
         // If we're still supposed to be listening, restart after a short delay
         if (listening) {
+          const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+          if (isMobile) {
+            setRestarting(true);
+          }
+          
           setTimeout(() => {
             try {
-              rec.start();
+              // Create a fresh recognition instance for mobile to ensure it works
+              if (isMobile) {
+                // For mobile, create a completely fresh instance
+                const SR = typeof window !== "undefined" &&
+                  ((window as any).SpeechRecognition ||
+                    (window as any).webkitSpeechRecognition);
+                
+                if (SR) {
+                  const newRec = new SR() as SpeechRecognition;
+                  newRec.continuous = true;
+                  newRec.interimResults = true;
+                  newRec.maxAlternatives = 1;
+                  newRec.lang = sourceLang;
+                  
+                  // Copy the same event handlers
+                  newRec.onresult = rec.onresult;
+                  newRec.onerror = rec.onerror;
+                  newRec.onend = rec.onend;
+                  
+                  recognitionRef.current = newRec;
+                  newRec.start();
+                  setRestarting(false);
+                }
+              } else {
+                // For desktop, just restart the existing instance
+                rec.start();
+              }
             } catch (e) {
               console.log("Error restarting recognition:", e);
               setListening(false);
+              setRestarting(false);
             }
-          }, 200); // Increased delay for mobile stability
+          }, 300); // Slightly longer delay for mobile
         }
       };
 
@@ -357,7 +390,9 @@ export default function Page() {
               {listening && (
                 <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-red-600 bg-red-50 px-3 sm:px-4 py-2 rounded-lg">
                   <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                  <span className="font-medium">Recording in progress...</span>
+                  <span className="font-medium">
+                    {restarting ? "Restarting microphone..." : "Recording in progress..."}
+                  </span>
                 </div>
               )}
             </div>
