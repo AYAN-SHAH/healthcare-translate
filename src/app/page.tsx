@@ -66,53 +66,12 @@ export default function Page() {
   const debouncedOriginal = useDebouncedValue(original, 600);
 
   const [translated, setTranslated] = useState("");
-  
-  // Track last activity for mobile restart
-  const lastActivityRef = useRef<number>(Date.now());
 
   // Speech recognition setup
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
-  // Monitor for inactivity and restart mobile recognition
-  useEffect(() => {
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (listening && isMobile) {
-      const checkInactivity = () => {
-        const now = Date.now();
-        const timeSinceLastActivity = now - lastActivityRef.current;
-        
-        // If no activity for 3 seconds and we're supposed to be listening, restart
-        if (timeSinceLastActivity > 3000 && listening && recognitionRef.current) {
-          console.log("No activity detected, restarting recognition");
-          setRestarting(true);
-          
-          try {
-            recognitionRef.current.stop();
-            setTimeout(() => {
-              if (listening) {
-                try {
-                  recognitionRef.current?.start();
-                  setRestarting(false);
-                } catch (e) {
-                  console.log("Error restarting after inactivity:", e);
-                  setListening(false);
-                  setRestarting(false);
-                }
-              }
-            }, 200);
-          } catch (e) {
-            console.log("Error stopping for inactivity restart:", e);
-            setRestarting(false);
-          }
-        }
-      };
-      
-      const interval = setInterval(checkInactivity, 1000); // Check every second
-      
-      return () => clearInterval(interval);
-    }
-  }, [listening]);
+  // We'll create fresh recognition instances in toggleMic instead
+  // This useEffect is no longer needed since we create instances on-demand
 
   const toggleMic = () => {
     if (listening) {
@@ -159,9 +118,6 @@ export default function Page() {
 
       rec.onresult = (e: SpeechRecognitionEvent) => {
         let finalText = "";
-        
-        // Update last activity time
-        lastActivityRef.current = Date.now();
         
         // Mobile devices: use a different approach to prevent repetition
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -245,23 +201,9 @@ export default function Page() {
           setTimeout(() => {
             try {
               if (isMobile) {
-                // For mobile, force stop and restart to ensure it works
-                try {
-                  rec.stop();
-                } catch (stopError) {
-                  console.log("Error stopping:", stopError);
-                }
-                
-                setTimeout(() => {
-                  try {
-                    rec.start();
-                    setRestarting(false);
-                  } catch (startError) {
-                    console.log("Error starting:", startError);
-                    setListening(false);
-                    setRestarting(false);
-                  }
-                }, 100);
+                // For mobile, just restart the same instance
+                rec.start();
+                setRestarting(false);
               } else {
                 // For desktop, just restart the existing instance
                 rec.start();
@@ -271,7 +213,7 @@ export default function Page() {
               setListening(false);
               setRestarting(false);
             }
-          }, 300); // Slightly longer delay for mobile
+          }, 200); // Shorter delay for faster response
         }
       };
 
