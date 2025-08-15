@@ -103,7 +103,8 @@ export default function Page() {
       // Mobile-specific optimizations
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       if (isMobile) {
-        // On mobile, be more conservative with interim results
+        // On mobile, disable interim results to prevent repetition
+        rec.interimResults = false;
         rec.maxAlternatives = 1; // Only get the best alternative
       }
       
@@ -115,34 +116,47 @@ export default function Page() {
 
       rec.onresult = (e: SpeechRecognitionEvent) => {
         let finalText = "";
-        let interimText = "";
         
-        // Get the most recent result for better mobile handling
-        const lastResultIndex = e.results.length - 1;
-        const lastResult = e.results[lastResultIndex];
+        // Mobile devices: only process final results
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
-        if (lastResult.isFinal) {
-          // For final results, accumulate all final transcripts
+        if (isMobile) {
+          // On mobile, only accumulate final results to prevent repetition
           for (let i = 0; i < e.results.length; i++) {
             const result = e.results[i];
             if (result.isFinal) {
               finalText += result[0].transcript + " ";
             }
           }
-          // Only show final text, no interim
           setOriginal(finalText.trim());
         } else {
-          // For interim results, show the latest interim + all previous final results
-          for (let i = 0; i < e.results.length - 1; i++) {
-            const result = e.results[i];
-            if (result.isFinal) {
-              finalText += result[0].transcript + " ";
-            }
-          }
-          interimText = lastResult[0].transcript;
+          // Desktop: use the original logic with interim results
+          let interimText = "";
+          const lastResultIndex = e.results.length - 1;
+          const lastResult = e.results[lastResultIndex];
           
-          const displayText = (finalText + interimText).trim();
-          setOriginal(displayText);
+          if (lastResult.isFinal) {
+            // For final results, accumulate all final transcripts
+            for (let i = 0; i < e.results.length; i++) {
+              const result = e.results[i];
+              if (result.isFinal) {
+                finalText += result[0].transcript + " ";
+              }
+            }
+            setOriginal(finalText.trim());
+          } else {
+            // For interim results, show the latest interim + all previous final results
+            for (let i = 0; i < e.results.length - 1; i++) {
+              const result = e.results[i];
+              if (result.isFinal) {
+                finalText += result[0].transcript + " ";
+              }
+            }
+            interimText = lastResult[0].transcript;
+            
+            const displayText = (finalText + interimText).trim();
+            setOriginal(displayText);
+          }
         }
       };
 
@@ -387,7 +401,7 @@ export default function Page() {
               <div>
                 <p className="font-medium">Live transcript from microphone appears here.</p>
                 <p className="text-orange-600 mt-1">💡 Tip: Speak clearly and pause between sentences for better accuracy.</p>
-                <p className="text-blue-600 mt-1 text-xs">📱 Mobile: Speak slowly and wait for each word to appear before continuing.</p>
+                <p className="text-blue-600 mt-1 text-xs">📱 Mobile: Words will appear after you finish speaking each phrase. Speak naturally and pause between phrases.</p>
               </div>
             </div>
           </div>
