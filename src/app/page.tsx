@@ -214,50 +214,55 @@ export default function Page() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4 md:p-8">
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-3 sm:p-4 md:p-8">
       <div className="mx-auto max-w-6xl">
-        <header className="mb-8 text-center">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-              <Stethoscope className="w-6 h-6 text-white" />
+        <header className="mb-6 md:mb-8 text-center">
+          <div className="flex items-center justify-center gap-2 sm:gap-4 mb-3 md:mb-4">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
+              <Stethoscope className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
               Healthcare Translation
             </h1>
           </div>
-          <p className="text-base text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-gray-600 max-w-3xl mx-auto leading-relaxed px-2">
             Professional real-time multilingual communication platform for healthcare providers and patients. 
             Seamlessly convert speech to text, translate with medical precision, and provide audio playback.
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-gray-200">
-              <Mic className="w-4 h-4 text-blue-600" />
-              <span className="text-sm font-medium text-gray-700">Voice Recognition</span>
+          <div className="mt-4 md:mt-6 flex flex-wrap justify-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm border border-gray-200">
+              <Mic className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+              <span className="text-xs sm:text-sm font-medium text-gray-700">Voice Recognition</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-gray-200">
-              <Globe className="w-4 h-4 text-green-600" />
-              <span className="text-sm font-medium text-gray-700">AI Translation</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm border border-gray-200">
+              <Globe className="w-3 h-3 sm:w-4 sm:h-4 text-green-600" />
+              <span className="text-xs sm:text-sm font-medium text-gray-700">AI Translation</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-gray-200">
-              <Volume2 className="w-4 h-4 text-purple-600" />
-              <span className="text-sm font-medium text-gray-700">Audio Playback</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm border border-gray-200">
+              <Volume2 className="w-3 h-3 sm:w-4 sm:h-4 text-purple-600" />
+              <span className="text-xs sm:text-sm font-medium text-gray-700">Audio Playback</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm border border-gray-200">
-              <MessageSquare className="w-4 h-4 text-orange-600" />
-              <span className="text-sm font-medium text-gray-700">Mobile Optimized</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 bg-white/80 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-sm border border-gray-200">
+              <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 text-orange-600" />
+              <span className="text-xs sm:text-sm font-medium text-gray-700">Mobile Optimized</span>
             </div>
           </div>
         </header>
 
-        <section className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 p-8 mb-8">
-          <div className="grid gap-6 md:grid-cols-3 items-end">
-            <div className="flex flex-col gap-3">
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                <Languages className="w-4 h-4 text-blue-600" />
+        <section className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border border-gray-200/50 p-4 sm:p-6 md:p-8 mb-6 md:mb-8">
+          <div className="grid gap-4 sm:gap-6 md:grid-cols-3 items-end">
+            <div className="flex flex-col gap-2 sm:gap-3">
+              <label className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-700">
+                <Languages className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
                 Input Language
               </label>
               <select
-                className="border border-gray-300 rounded-xl p-4 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm text-gray-900 font-medium"
+                className="border border-gray-300 rounded-lg sm:rounded-xl p-3 sm:p-4 bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm text-gray-900 font-medium text-sm sm:text-base appearance-none bg-no-repeat bg-right pr-10"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 0.5rem center',
+                  backgroundSize: '1.5em 1.5em'
+                }}
                 value={sourceLang}
                 onChange={(e) => setSourceLang(e.target.value)}
               >
@@ -268,11 +273,11 @@ export default function Page() {
                 ))}
               </select>
             </div>
-            <div className="flex flex-col gap-4">
-              <div className="flex gap-3">
+            <div className="flex flex-col gap-3 sm:gap-4">
+              <div className="flex gap-2 sm:gap-3">
                 <button
                   onClick={toggleMic}
-                  className={`flex-1 px-8 py-4 rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
+                  className={`flex-1 px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold transition-all duration-200 flex items-center justify-center gap-2 text-sm sm:text-base ${
                     listening 
                       ? "bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white shadow-lg transform hover:scale-105" 
                       : "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg transform hover:scale-105"
@@ -280,43 +285,50 @@ export default function Page() {
                 >
                   {listening ? (
                     <>
-                      <MicOff className="w-5 h-5" />
-                      Stop Recording
+                      <MicOff className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="hidden sm:inline">Stop Recording</span>
+                      <span className="sm:hidden">Stop</span>
                     </>
                   ) : (
                     <>
-                      <Mic className="w-5 h-5" />
-                      Start Recording
+                      <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <span className="hidden sm:inline">Start Recording</span>
+                      <span className="sm:hidden">Start</span>
                     </>
                   )}
                 </button>
                 <button
                   onClick={speak}
                   disabled={!translated}
-                  className={`px-6 py-4 rounded-xl border-2 transition-all duration-200 flex items-center gap-2 ${
+                  className={`px-3 sm:px-4 md:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl border-2 transition-all duration-200 flex items-center gap-2 text-sm sm:text-base ${
                     translated 
                       ? "border-purple-500 text-purple-600 hover:bg-purple-50 hover:border-purple-600 transform hover:scale-105" 
                       : "border-gray-300 text-gray-400 cursor-not-allowed"
                   }`}
                 >
-                  <Volume2 className="w-5 h-5" />
-                  Play
+                  <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="hidden sm:inline">Play</span>
                 </button>
               </div>
               {listening && (
-                <div className="flex items-center gap-3 text-sm text-red-600 bg-red-50 px-4 py-2 rounded-lg">
+                <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-red-600 bg-red-50 px-3 sm:px-4 py-2 rounded-lg">
                   <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
                   <span className="font-medium">Recording in progress...</span>
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-3">
-              <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
-                <Globe className="w-4 h-4 text-green-600" />
+            <div className="flex flex-col gap-2 sm:gap-3">
+              <label className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-700">
+                <Globe className="w-3 h-3 sm:w-4 sm:h-4 text-green-600" />
                 Output Language
               </label>
               <select
-                className="border border-gray-300 rounded-xl p-4 bg-white focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all shadow-sm text-gray-900 font-medium"
+                className="border border-gray-300 rounded-lg sm:rounded-xl p-3 sm:p-4 bg-white focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all shadow-sm text-gray-900 font-medium text-sm sm:text-base appearance-none bg-no-repeat bg-right pr-10"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                  backgroundPosition: 'right 0.5rem center',
+                  backgroundSize: '1.5em 1.5em'
+                }}
                 value={targetLang}
                 onChange={(e) => setTargetLang(e.target.value)}
               >
@@ -330,30 +342,28 @@ export default function Page() {
           </div>
         </section>
 
-
-
         {/* Dual transcripts */}
-        <section className="grid gap-8 md:grid-cols-2">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Mic className="w-5 h-5 text-white" />
+        <section className="grid gap-4 sm:gap-6 md:gap-8 md:grid-cols-2">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border border-gray-200/50 p-4 sm:p-6 md:p-8">
+            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
+                <Mic className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <div>
-                <h2 className="font-bold text-gray-800 text-lg">
+                <h2 className="font-bold text-gray-800 text-base sm:text-lg">
                   Original Transcript
                 </h2>
-                <p className="text-sm text-gray-500">{getLabel(sourceLang)}</p>
+                <p className="text-xs sm:text-sm text-gray-500">{getLabel(sourceLang)}</p>
               </div>
             </div>
             <textarea
-              className="w-full h-72 border border-gray-300 rounded-xl p-6 resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/90 shadow-sm text-gray-700 placeholder-gray-400"
+              className="w-full h-48 sm:h-56 md:h-72 border border-gray-300 rounded-lg sm:rounded-xl p-4 sm:p-6 resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white/90 shadow-sm text-gray-700 placeholder-gray-400 text-sm sm:text-base"
               placeholder="Speak into your microphone or type here to begin translation..."
               value={original}
               onChange={(e) => setOriginal(e.target.value)}
             />
-            <div className="mt-4 flex items-start gap-3 text-sm text-gray-600 bg-blue-50/50 p-4 rounded-xl">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+            <div className="mt-3 sm:mt-4 flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600 bg-blue-50/50 p-3 sm:p-4 rounded-lg sm:rounded-xl">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-1 sm:mt-2 flex-shrink-0"></div>
               <div>
                 <p className="font-medium">Live transcript from microphone appears here.</p>
                 <p className="text-orange-600 mt-1">💡 Tip: Speak clearly and pause between sentences for better accuracy.</p>
@@ -361,92 +371,94 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Globe className="w-5 h-5 text-white" />
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border border-gray-200/50 p-4 sm:p-6 md:p-8">
+            <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
+                <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <div>
-                <h2 className="font-bold text-gray-800 text-lg">
+                <h2 className="font-bold text-gray-800 text-base sm:text-lg">
                   Translated Text
                 </h2>
-                <p className="text-sm text-gray-500">{getLabel(targetLang)}</p>
+                <p className="text-xs sm:text-sm text-gray-500">{getLabel(targetLang)}</p>
               </div>
             </div>
             <textarea
-              className="w-full h-72 border border-gray-300 rounded-xl p-6 resize-none bg-gray-50/90 shadow-sm text-gray-700"
+              className="w-full h-48 sm:h-56 md:h-72 border border-gray-300 rounded-lg sm:rounded-xl p-4 sm:p-6 resize-none bg-gray-50/90 shadow-sm text-gray-700 text-sm sm:text-base"
               value={translated || "Translation will appear here..."}
               readOnly
             />
-            <div className="mt-4 flex gap-3">
+            <div className="mt-3 sm:mt-4 flex gap-2 sm:gap-3">
               <button
                 onClick={() => navigator.clipboard.writeText(translated)}
                 disabled={!translated}
-                className={`px-6 py-3 rounded-xl border-2 transition-all duration-200 flex items-center gap-2 font-medium ${
+                className={`px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl border-2 transition-all duration-200 flex items-center gap-2 font-medium text-xs sm:text-sm ${
                   translated 
                     ? "border-green-500 text-green-600 hover:bg-green-50 hover:border-green-600 transform hover:scale-105" 
                     : "border-gray-300 text-gray-400 cursor-not-allowed"
                 }`}
               >
-                <Copy className="w-4 h-4" />
-                Copy
+                <Copy className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Copy</span>
+                <span className="sm:hidden">Copy</span>
               </button>
               <button
                 onClick={speak}
                 disabled={!translated}
-                className={`px-6 py-3 rounded-xl border-2 transition-all duration-200 flex items-center gap-2 font-medium ${
+                className={`px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-lg sm:rounded-xl border-2 transition-all duration-200 flex items-center gap-2 font-medium text-xs sm:text-sm ${
                   translated 
                     ? "border-purple-500 text-purple-600 hover:bg-purple-50 hover:border-purple-600 transform hover:scale-105" 
                     : "border-gray-300 text-gray-400 cursor-not-allowed"
                 }`}
               >
-                <Volume2 className="w-4 h-4" />
-                Play Audio
+                <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Play Audio</span>
+                <span className="sm:hidden">Play</span>
               </button>
             </div>
           </div>
         </section>
 
         {/* Footer with additional info */}
-        <footer className="mt-16 text-center">
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 p-8 max-w-5xl mx-auto">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
-                <Heart className="w-4 h-4 text-white" />
+        <footer className="mt-12 sm:mt-16 text-center">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl sm:rounded-2xl shadow-xl border border-gray-200/50 p-4 sm:p-6 md:p-8 max-w-5xl mx-auto">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
               </div>
-              <h3 className="font-bold text-gray-800 text-xl">Healthcare Translation Features</h3>
+              <h3 className="font-bold text-gray-800 text-lg sm:text-xl">Healthcare Translation Features</h3>
             </div>
-            <div className="grid gap-6 md:grid-cols-3 text-sm text-gray-600">
-              <div className="bg-blue-50/50 p-6 rounded-xl">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-                    <Mic className="w-4 h-4 text-white" />
+            <div className="grid gap-4 sm:gap-6 md:grid-cols-3 text-xs sm:text-sm text-gray-600">
+              <div className="bg-blue-50/50 p-4 sm:p-6 rounded-lg sm:rounded-xl">
+                <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                    <Mic className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <h4 className="font-semibold text-gray-700">Voice Recognition</h4>
+                  <h4 className="font-semibold text-gray-700 text-sm sm:text-base">Voice Recognition</h4>
                 </div>
-                <p className="text-gray-600">Real-time speech-to-text with medical terminology support</p>
+                <p className="text-gray-600 text-xs sm:text-sm">Real-time speech-to-text with medical terminology support</p>
               </div>
-              <div className="bg-green-50/50 p-6 rounded-xl">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
-                    <Globe className="w-4 h-4 text-white" />
+              <div className="bg-green-50/50 p-4 sm:p-6 rounded-lg sm:rounded-xl">
+                <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                    <Globe className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <h4 className="font-semibold text-gray-700">AI Translation</h4>
+                  <h4 className="font-semibold text-gray-700 text-sm sm:text-base">AI Translation</h4>
                 </div>
-                <p className="text-gray-600">Powered by OpenAI GPT-4 for accurate medical translations</p>
+                <p className="text-gray-600 text-xs sm:text-sm">Powered by OpenAI GPT-4 for accurate medical translations</p>
               </div>
-              <div className="bg-purple-50/50 p-6 rounded-xl">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
-                    <CheckCircle className="w-4 h-4 text-white" />
+              <div className="bg-purple-50/50 p-4 sm:p-6 rounded-lg sm:rounded-xl">
+                <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
+                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                    <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
                   </div>
-                  <h4 className="font-semibold text-gray-700">Privacy First</h4>
+                  <h4 className="font-semibold text-gray-700 text-sm sm:text-base">Privacy First</h4>
                 </div>
-                <p className="text-gray-600">No data storage - all processing happens in real-time</p>
+                <p className="text-gray-600 text-xs sm:text-sm">No data storage - all processing happens in real-time</p>
               </div>
             </div>
-            <div className="mt-8 pt-6 border-t border-gray-200">
-              <p className="text-sm text-gray-600 font-medium">
+            <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200">
+              <p className="text-xs sm:text-sm text-gray-600 font-medium">
                 This tool assists communication but should not replace professional medical interpretation services for critical healthcare decisions.
               </p>
               <p className="text-xs text-gray-500 mt-2">
