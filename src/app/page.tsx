@@ -66,55 +66,12 @@ export default function Page() {
   const debouncedOriginal = useDebouncedValue(original, 600);
 
   const [translated, setTranslated] = useState("");
-  
-  // Mobile restart polling
-  const restartTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Speech recognition setup
   const recognitionRef = useRef<SpeechRecognition | null>(null);
 
-  // Mobile restart polling effect
-  useEffect(() => {
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    
-    if (listening && isMobile) {
-      // Set up polling to check if recognition is still active
-      const checkRecognition = () => {
-        if (listening && recognitionRef.current) {
-          try {
-            // Try to access recognition state - if it fails, it means recognition stopped
-            const rec = recognitionRef.current;
-            // Force restart if recognition seems to have stopped
-            rec.stop();
-            setTimeout(() => {
-              if (listening) {
-                rec.start();
-              }
-            }, 100);
-          } catch (e) {
-            // Recognition stopped, restart it
-            if (listening) {
-              toggleMic(); // Stop current
-              setTimeout(() => {
-                if (listening) {
-                  toggleMic(); // Start fresh
-                }
-              }, 200);
-            }
-          }
-        }
-      };
-      
-      // Check every 2 seconds
-      restartTimeoutRef.current = setInterval(checkRecognition, 2000);
-      
-      return () => {
-        if (restartTimeoutRef.current) {
-          clearInterval(restartTimeoutRef.current);
-        }
-      };
-    }
-  }, [listening]);
+  // We'll create fresh recognition instances in toggleMic instead
+  // This useEffect is no longer needed since we create instances on-demand
 
   const toggleMic = () => {
     if (listening) {
@@ -128,13 +85,6 @@ export default function Page() {
         }
       }
       setListening(false);
-      setRestarting(false);
-      
-      // Clear restart polling
-      if (restartTimeoutRef.current) {
-        clearInterval(restartTimeoutRef.current);
-        restartTimeoutRef.current = null;
-      }
     } else {
       // Start recording
       const SR = typeof window !== "undefined" &&
@@ -241,19 +191,48 @@ export default function Page() {
       };
 
       rec.onend = () => {
-        // For mobile, let the polling mechanism handle restart
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        if (listening && !isMobile) {
-          // Only auto-restart on desktop
+        // If we're still supposed to be listening, restart after a short delay
+        if (listening) {
+          const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+          if (isMobile) {
+            setRestarting(true);
+          }
+          
           setTimeout(() => {
             try {
-              rec.start();
+              // Create a fresh recognition instance for mobile to ensure it works
+              if (isMobile) {
+                // For mobile, create a completely fresh instance
+                const SR = typeof window !== "undefined" &&
+                  ((window as any).SpeechRecognition ||
+                    (window as any).webkitSpeechRecognition);
+                
+                if (SR) {
+                  const newRec = new SR() as SpeechRecognition;
+                  newRec.continuous = true;
+                  newRec.interimResults = true;
+                  newRec.maxAlternatives = 1;
+                  newRec.lang = sourceLang;
+                  
+                  // Copy the same event handlers
+                  newRec.onresult = rec.onresult;
+                  newRec.onerror = rec.onerror;
+                  newRec.onend = rec.onend;
+                  
+                  recognitionRef.current = newRec;
+                  newRec.start();
+                  setRestarting(false);
+                }
+              } else {
+                // For desktop, just restart the existing instance
+                rec.start();
+              }
             } catch (e) {
               console.log("Error restarting recognition:", e);
               setListening(false);
+              setRestarting(false);
             }
-          }, 200);
+          }, 300); // Slightly longer delay for mobile
         }
       };
 
@@ -414,7 +393,6 @@ export default function Page() {
                   <span className="font-medium">
                     {restarting ? "Restarting microphone..." : "Recording in progress..."}
                   </span>
-                  <span className="text-xs text-gray-500">(Auto-monitoring on mobile)</span>
                 </div>
               )}
             </div>
