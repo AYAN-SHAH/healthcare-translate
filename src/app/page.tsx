@@ -103,9 +103,10 @@ export default function Page() {
       // Mobile-specific optimizations
       const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       if (isMobile) {
-        // On mobile, disable interim results to prevent repetition
-        rec.interimResults = false;
+        // On mobile, keep interim results but handle them differently
+        rec.interimResults = true;
         rec.maxAlternatives = 1; // Only get the best alternative
+        rec.continuous = true; // Ensure continuous listening
       }
       
       try {
@@ -117,18 +118,27 @@ export default function Page() {
       rec.onresult = (e: SpeechRecognitionEvent) => {
         let finalText = "";
         
-        // Mobile devices: only process final results
+        // Mobile devices: use a different approach to prevent repetition
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         
         if (isMobile) {
-          // On mobile, only accumulate final results to prevent repetition
+          // On mobile, use a more conservative approach
+          // Only show the most recent final result + current interim
+          let currentInterim = "";
+          
           for (let i = 0; i < e.results.length; i++) {
             const result = e.results[i];
             if (result.isFinal) {
-              finalText += result[0].transcript + " ";
+              // For mobile, only keep the most recent final result to prevent accumulation
+              finalText = result[0].transcript + " ";
+            } else {
+              // Keep the current interim result
+              currentInterim = result[0].transcript;
             }
           }
-          setOriginal(finalText.trim());
+          
+          const displayText = (finalText + currentInterim).trim();
+          setOriginal(displayText);
         } else {
           // Desktop: use the original logic with interim results
           let interimText = "";
@@ -189,7 +199,7 @@ export default function Page() {
               console.log("Error restarting recognition:", e);
               setListening(false);
             }
-          }, 100); // Small delay to prevent rapid restarts
+          }, 200); // Increased delay for mobile stability
         }
       };
 
@@ -401,7 +411,7 @@ export default function Page() {
               <div>
                 <p className="font-medium">Live transcript from microphone appears here.</p>
                 <p className="text-orange-600 mt-1">💡 Tip: Speak clearly and pause between sentences for better accuracy.</p>
-                <p className="text-blue-600 mt-1 text-xs">📱 Mobile: Words will appear after you finish speaking each phrase. Speak naturally and pause between phrases.</p>
+                <p className="text-blue-600 mt-1 text-xs">📱 Mobile: Speak naturally. The app will show your words as you speak and continue listening after pauses.</p>
               </div>
             </div>
           </div>
