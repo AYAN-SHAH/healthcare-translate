@@ -200,29 +200,10 @@ export default function Page() {
           
           setTimeout(() => {
             try {
-              // Create a fresh recognition instance for mobile to ensure it works
               if (isMobile) {
-                // For mobile, create a completely fresh instance
-                const SR = typeof window !== "undefined" &&
-                  ((window as any).SpeechRecognition ||
-                    (window as any).webkitSpeechRecognition);
-                
-                if (SR) {
-                  const newRec = new SR() as SpeechRecognition;
-                  newRec.continuous = true;
-                  newRec.interimResults = true;
-                  newRec.maxAlternatives = 1;
-                  newRec.lang = sourceLang;
-                  
-                  // Copy the same event handlers
-                  newRec.onresult = rec.onresult;
-                  newRec.onerror = rec.onerror;
-                  newRec.onend = rec.onend;
-                  
-                  recognitionRef.current = newRec;
-                  newRec.start();
-                  setRestarting(false);
-                }
+                // For mobile, just restart the same instance
+                rec.start();
+                setRestarting(false);
               } else {
                 // For desktop, just restart the existing instance
                 rec.start();
@@ -232,7 +213,7 @@ export default function Page() {
               setListening(false);
               setRestarting(false);
             }
-          }, 300); // Slightly longer delay for mobile
+          }, 200); // Shorter delay for faster response
         }
       };
 
